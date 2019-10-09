@@ -6,12 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table
 @Data
-public class Employee
+public class Employee implements Serializable
 {
+    private static final long serialVersionUID = -5240924860000009802L;
+
     @Id
     private Long id;
 
