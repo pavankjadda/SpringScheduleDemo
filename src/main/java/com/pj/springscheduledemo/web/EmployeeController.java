@@ -3,10 +3,7 @@ package com.pj.springscheduledemo.web;
 import com.pj.springscheduledemo.model.Employee;
 import com.pj.springscheduledemo.repo.EmployeeRepository;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +31,13 @@ public class EmployeeController
         return employeeRepository.findById(id);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
+    public Employee create(@RequestBody Employee employee)
+    {
+        return employeeRepository.saveAndFlush(employee);
+    }
+
+    @GetMapping(value = "/create/get")
     public Employee findById()
     {
         return employeeRepository.saveAndFlush(new Employee());

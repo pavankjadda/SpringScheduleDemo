@@ -32,14 +32,31 @@ public class ScheduleServiceImpl implements ScheduleService
     @Async
     @Scheduled(fixedDelay = 5000)
     @Override
-    public void executeScheduleJob()
+    public void executeGetEmployeesScheduleJob()
     {
-        logger.info("Asyn Scheduled job started on {}", LocalDateTime.now());
+        logger.info("executeGetEmployeesScheduleJob Scheduled job started on {}", LocalDateTime.now());
         ResponseEntity<List<Employee>> employeeResponseEntity=restTemplate.exchange(API_URL.concat("/list"), HttpMethod.GET, null, new ParameterizedTypeReference<List<Employee>>() {});
-
         List<Employee> employees=employeeResponseEntity.getBody();
 
         logger.info("Employees: {}",employees);
+    }
+
+    @Async
+    @Scheduled(fixedDelay = 5000)
+    @Override
+    public void executeCreateEmployeeScheduleJob()
+    {
+        logger.info("executeCreateEmployeeScheduleJob Scheduled job started on {}", LocalDateTime.now());
+        Employee employee=new Employee();
+        employee.setFirstName("John");
+        employee.setLastName("Doe");
+        employee.setEmail("jdoe@gh.com");
+        employee.setPhone("803-884-0848");
+
+        //Replace employee variable with ArrayList if you are trying to POST a list
+        Employee employeeResponse=restTemplate.postForObject(API_URL.concat("/create"),employee,Employee.class);
+
+        logger.info("Created new employee: {}",employeeResponse);
 
     }
 }
